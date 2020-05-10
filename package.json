@@ -1,9 +1,10 @@
 {
-  "name": "watch-together",
+  "name": "leaguer-discord-bot",
   "version": "1.0.0",
-  "description": "Discord bot allowing users to watch videos together ",
+  "description": "Discord bot to live track summoner games and stats",
   "main": "index.js",
   "dependencies": {
+    "@discordjs/opus": "^0.3.2",
     "discord.js": "^12.2.0"
   },
   "devDependencies": {},
