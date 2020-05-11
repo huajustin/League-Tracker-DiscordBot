@@ -1,3 +1,5 @@
+const summonerCall = require('../endpoints/riot/summoner.js');
+
 module.exports = {
 	name: 'track',
 	description: 'Begins to track a summoner whenever they start a new game',
@@ -17,5 +19,6 @@ module.exports = {
         
         // keep track of our summoners
         this.summoners.push(summonerName);
+        summonerCall(summonerName);
     },
 };
