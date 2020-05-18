@@ -15,7 +15,7 @@ module.exports = {
         const summonerName = args.join(' ');
 
         console.log(`Now tracking ${summonerName}`);
-        message.reply(`Now tracking ${summonerName}. Use \'!untrack ${summonerName}\' to stop tracking`);
+        message.reply(`Now tracking ${summonerName}. Use '!untrack ${summonerName}' to stop tracking`);
         
         // TODO: Need to implement API monitor to watch for changes.. then add summoner
         // to be monitored

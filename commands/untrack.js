@@ -18,6 +18,6 @@ module.exports = {
         // from monitor
 
         console.log(`Tracking ${summonerName} stopped`);
-        message.reply(`Tracking ${summonerName} stopped. Use \'!track ${summonerName}\' to start tracking again`);
+        message.reply(`Tracking ${summonerName} stopped. Use '!track ${summonerName}' to start tracking again`);
     }
-}
+};

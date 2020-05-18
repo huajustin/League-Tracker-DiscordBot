@@ -14,7 +14,7 @@ module.exports = (summoner) => {
             "X-Riot-Token": options.key
         },
         port: 443
-    }
+    };
 
     console.log(httpOptions.host);
 
@@ -45,5 +45,5 @@ module.exports = (summoner) => {
     // http request error handler
     req.on('error', (e) => {
         console.error(e);
-    })
+    });
 };
