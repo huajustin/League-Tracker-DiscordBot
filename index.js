@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
 const {prefix, token} = require('./config.json');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
+const url = 'mongodb://localhost:27017';
 const client = new Discord.Client();
 
 // create command handler by importing local command modules and mapping to a collection
@@ -12,6 +14,15 @@ for (const file of commandFiles) {
     let reqCommand = require(`./commands/${file}`);
     client.commands.set(reqCommand.name, reqCommand);
 }
+
+// start database connection
+mongoose.connect(url, {useNewUrlParser: true});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+    console.log("Database connected!");
+});
 
 // verify we have logged in
 client.on('ready', () => {
