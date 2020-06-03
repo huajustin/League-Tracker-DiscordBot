@@ -39,7 +39,7 @@ module.exports = (summoner) => {
                     console.log(data.id);
 
                     // Not sure if it's better to resolve with JSON string or JSON object
-                    resolve(data);
+                    resolve(json);
                 } else {
                     console.log('Status: ', res.statusCode);
                     reject(new Error(`Status error: ${res.statusCode}`));
