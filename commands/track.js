@@ -22,8 +22,9 @@ module.exports = {
         // TODO: Need to implement API monitor to watch for changes
 
         // keep track of our summoners in our mongodb database
+        // need to test
         let summonerObject = await summonerCall(summonerName);
-        let summonerDocument = new SummonerObject({summoner: summonerObject});
+        let summonerDocument = new SummonerObject({summoner: summonerObject, name: summonerName});
         await summonerDocument.save();
     },
 };
