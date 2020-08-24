@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const summonerSchema = require('../endpoints/riot/resources/models/summoner_mode.js');
-const SummonerObject = mongoose.model('Summoner', summonerSchema);
+// const summonerSchema = require('../resources/models/summoner_model.js');
+// const SummonerObject = mongoose.model('Summoner', summonerSchema);
+const SummonerObject = require('../resources/models/summoner_model.js');
 
 module.exports = {
     name: 'untrack',
@@ -19,8 +19,14 @@ module.exports = {
         message.reply(`Tracking ${summonerName} stopped. Use '!track ${summonerName}' to start tracking again`);
 
         // need to test
-        SummonerObject.deleteOne({name: summonerName}, (err) => {
-            console.error(`Summoner does not exist or an error has occured! ${err}`);
+        SummonerObject.deleteOne({name: summonerName}, (err, res) => {
+            if (err) {
+                console.error(`Could not delete summoner!`);
+                console.error(err);
+            } else {
+                console.log(`Summoner succesfully deleted`);
+                console.log(res);
+            }
         });
     }
 };

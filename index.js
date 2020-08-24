@@ -3,7 +3,7 @@ const {prefix, token} = require('./config.json');
 const fs = require('fs');
 const mongoose = require('mongoose');
 
-const url = 'mongodb://localhost:27017';
+const dbURL = 'mongodb://localhost:27017/summoners';
 const client = new Discord.Client();
 
 // create command handler by importing local command modules and mapping to a collection
@@ -16,7 +16,7 @@ for (const file of commandFiles) {
 }
 
 // start database connection
-mongoose.connect(url, {useNewUrlParser: true});
+mongoose.connect(dbURL, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

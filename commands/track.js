@@ -1,7 +1,8 @@
 const summonerCall = require('../endpoints/riot/summoner.js');
-const mongoose = require('mongoose');
-const summonerSchema = require('../endpoints/riot/resources/models/summoner_mode.js');
-const SummonerObject = mongoose.model('Summoner', summonerSchema);
+// const mongoose = require('mongoose');
+// const summonerSchema = require('../resources/models/summoner_model.js');
+// const SummonerObject = mongoose.model('Summoner', summonerSchema);
+const SummonerObject = require('../resources/models/summoner_model.js');
 
 module.exports = {
 	name: 'track',
@@ -23,8 +24,8 @@ module.exports = {
 
         // keep track of our summoners in our mongodb database
         // need to test
-        let summonerObject = await summonerCall(summonerName);
-        let summonerDocument = new SummonerObject({summoner: summonerObject, name: summonerName});
+        let summonerData = await summonerCall(summonerName);
+        let summonerDocument = new SummonerObject({summoner: summonerData, name: summonerName});
         await summonerDocument.save();
     },
 };
