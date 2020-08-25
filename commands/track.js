@@ -3,6 +3,7 @@ const summonerCall = require('../endpoints/riot/summoner.js');
 // const summonerSchema = require('../resources/models/summoner_model.js');
 // const SummonerObject = mongoose.model('Summoner', summonerSchema);
 const SummonerObject = require('../resources/models/summoner_model.js');
+const GuildInfoObject = require('../resources/models/guild_info_model.js');
 
 module.exports = {
 	name: 'track',
@@ -23,9 +24,16 @@ module.exports = {
         // TODO: Need to implement API monitor to watch for changes
 
         // keep track of our summoners in our mongodb database
-        // need to test
         let summonerData = await summonerCall(summonerName);
         let summonerDocument = new SummonerObject({summoner: summonerData, name: summonerName});
         await summonerDocument.save();
+
+        // keep track of the server's tracked summoners
+        await GuildInfoObject.findOneAndUpdate(
+            {guildID: message.guild.id}, 
+            {$push: {trackedSummoners: summonerName}}, 
+            {upsert: true}
+        );
+
     },
 };
