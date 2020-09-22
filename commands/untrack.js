@@ -26,7 +26,7 @@ module.exports = {
                 console.error(err);
             } else {
                 if (res.deletedCounted === 0) {
-                    console.log(`Profile for ${summonerName} does not exist and cannot be deleted`)
+                    console.log(`Profile for ${summonerName} does not exist and cannot be deleted`);
                 } else {
                     console.log(`Profile for ${summonerName} succesfully deleted`);
 
