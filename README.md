@@ -28,12 +28,14 @@ After the bot has been installed and configured, the bot can start up. If not al
 The bot can then be run by running the terminal command `node index.js` at the project root directory.
 
 ## Usage
-There are two supported (and incomplete) commands that this bot will recognize:
+There are three supported (two being incomplete) commands that this bot will recognize:
 
-* `!track <summoner_name>` where `<summoner_name>` is replaced with the summoner that the user wishes to track (no quotation marks neccesary for summoner names with spaces!)
-* `!untrack <summoner_name>` where `<summoner_name>` is replaced with the summoner that the user wishes to stop tracking
+* `!track <summoner_name>` where `<summoner_name>` is replaced with the summoner that the user wishes to track (no quotation marks neccesary for summoner names with spaces!) (_incomplete_)
+* `!untrack <summoner_name>` where `<summoner_name>` is replaced with the summoner that the user wishes to stop tracking (_incomplete_)
+* `!lookup <summoner_name>` where `<summoner_name>` is replaced with the summoner that the user wishes to lookup once
 
-Both of these commands are part of the bot's core functionality to make calls to the Riot Games API and begin/stop tracking summoners. Future commands may include being able to retrieve summoner information only once instead of beginning tracking, as well as granulating the type of information being returned more specifically.
+
+Both of these commands are part of the bot's core functionality to make calls to the Riot Games API and begin/stop tracking summoners. Future commands may allow users to specify granularity of data to lookup.
 
 ## Future Plans
 
