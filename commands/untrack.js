@@ -1,5 +1,3 @@
-// const summonerSchema = require('../resources/models/summoner_model.js');
-// const SummonerObject = mongoose.model('Summoner', summonerSchema);
 const SummonerObject = require('../resources/models/summoner_model.js');
 const GuildInfoObject = require('../resources/models/guild_info_model.js');
 
@@ -20,7 +18,7 @@ module.exports = {
         message.reply(`Tracking ${summonerName} stopped. Use '!track ${summonerName}' to start tracking again`);
 
         // TODO: Currently, code is only valid assuming a summoner can only be tracked by one server. Code should be updated to fix this
-        SummonerObject.deleteOne({name: summonerName}, (err, res) => {
+        SummonerObject.deleteOne({name: summonerName}, async (err, res) => {
             if (err) {
                 console.error(`Could not delete summoner!`);
                 console.error(err);

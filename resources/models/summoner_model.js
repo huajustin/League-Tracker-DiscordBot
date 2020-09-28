@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const summonerSchema = new Schema({
     summoner: String,
     name: String,
+    level: String
 });
 
 // module.exports.Summoner = summonerSchema;

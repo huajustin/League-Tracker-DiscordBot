@@ -1,7 +1,6 @@
 const summonerCall = require('../endpoints/riot/summoner.js');
-// const mongoose = require('mongoose');
-// const summonerSchema = require('../resources/models/summoner_model.js');
-// const SummonerObject = mongoose.model('Summoner', summonerSchema);
+const leagueLookup = require('../endpoints/riot/league-v4');
+const startTracking = require('../endpoints/services/api_poller.js');
 const SummonerObject = require('../resources/models/summoner_model.js');
 const GuildInfoObject = require('../resources/models/guild_info_model.js');
 
@@ -23,10 +22,17 @@ module.exports = {
         
         // TODO: Need to implement API monitor to watch for changes
 
-        // keep track of our summoners in our mongodb database
+        // get summoner data from API and save into db
         let summonerData = await summonerCall(summonerName);
-        let summonerDocument = new SummonerObject({summoner: summonerData, name: summonerName});
+        let summonerID = JSON.parse(summonerData).id;
+        let summonerLevel = JSON.parse(summonerData).level;
+        let leagueLookupData = (await leagueLookup(summonerID))[0];
+
+        let summonerDocument = new SummonerObject({summoner: leagueLookupData, name: summonerName, level: summonerLevel});
         await summonerDocument.save();
+
+        // start polling service for summoner
+        startTracking(summonerName);
 
         // keep track of the server's tracked summoners
         await GuildInfoObject.findOneAndUpdate(
@@ -34,6 +40,5 @@ module.exports = {
             {$push: {trackedSummoners: summonerName}}, 
             {upsert: true}
         );
-
     },
 };
