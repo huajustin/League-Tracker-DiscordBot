@@ -1,9 +1,14 @@
+const EventEmitter = require('events');
 const getSummonerID = require('../riot/summoner');
 const getSummonerData = require('../riot/league-v4');
 const SummonerObject = require('../../resources/models/summoner_model.js');
 const _ = require('lodash/lang');
 
+const DEFAULT_POLL_TIME = 5000;
+
 const startPollService = (summonerName) => {
+    const updatedDataEventEmitter = new EventEmitter();
+
     const intervalID = setInterval(async () => {
         // if the summoner no longer exists in our db, stop tracking
         if (!(await SummonerObject.exists({ name: summonerName }))) {
@@ -20,15 +25,16 @@ const startPollService = (summonerName) => {
         let summonerLevel = JSON.parse(summonerData).level;
         let leagueLookupData = (await getSummonerData(summonerID))[0];
 
-        // TODO: emit an event to handle when there is a change detected
         if (!_.isEqual(currentSummonerData, leagueLookupData)) {
             console.log(`Changes detected for ${summonerName}`);
+            updatedDataEventEmitter.emit('summoner_update', summonerName, leagueLookupData);
         } else if (summonerLevel !== currentSummonerData.level) {
             console.log(`Changes in level detected for ${summonerName}`)
+            updatedDataEventEmitter.emit('summoner_levelup', summonerName, summonerLevel);
         } else {
             console.log(`No changes detected for ${summonerName}`);
         };
-    }, 5000);
+    }, DEFAULT_POLL_TIME);
 };
 
 module.exports = startPollService;
