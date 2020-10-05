@@ -1,8 +1,8 @@
 const summonerCall = require('../endpoints/riot/summoner.js');
 const leagueLookup = require('../endpoints/riot/league-v4');
-const startTracking = require('../endpoints/services/api_poller.js');
+const startTracking = require('../endpoints/services/tracker_service.js');
 const SummonerObject = require('../resources/models/summoner_model.js');
-const GuildInfoObject = require('../resources/models/guild_info_model.js');
+const SummonerTrackingObject = require('../resources/models/summoner_tracking_model.js');
 
 module.exports = {
 	name: 'track',
@@ -35,9 +35,9 @@ module.exports = {
         startTracking(summonerName);
 
         // keep track of the server's tracked summoners
-        await GuildInfoObject.findOneAndUpdate(
-            {guildID: message.guild.id}, 
-            {$push: {trackedSummoners: summonerName}}, 
+        await SummonerTrackingObject.findOneAndUpdate(
+            {name: summonerName}, 
+            {$push: {channelsTracking: message.channel.id}}, 
             {upsert: true}
         );
     },

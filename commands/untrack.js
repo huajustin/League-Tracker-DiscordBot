@@ -1,5 +1,5 @@
 const SummonerObject = require('../resources/models/summoner_model.js');
-const GuildInfoObject = require('../resources/models/guild_info_model.js');
+const SummonerTrackingObject = require('../resources/models/summoner_tracking_model.js');
 
 module.exports = {
     name: 'untrack',
@@ -29,9 +29,9 @@ module.exports = {
                     console.log(`Profile for ${summonerName} succesfully deleted`);
 
                     // we can guarantee that since the profile had an entry and was removed, we can also remove from server's tracked summoners
-                    await GuildInfoObject.findOneAndUpdate(
-                        {guildID: message.guild.id}, 
-                        {$pull: {trackedSummoners: summonerName}}, 
+                    await SummonerTrackingObject.findOneAndUpdate(
+                        {name: summonerName}, 
+                        {$pull: {channelsTracking: message.channel.id}}, 
                     );
                 }
                 console.log(`Database deletion result: ${res}`);
