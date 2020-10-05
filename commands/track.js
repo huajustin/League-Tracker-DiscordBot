@@ -19,8 +19,6 @@ module.exports = {
 
         console.log(`Now tracking ${summonerName}`);
         message.reply(`Now tracking ${summonerName}. Use '!untrack ${summonerName}' to stop tracking`);
-        
-        // TODO: Need to implement API monitor to watch for changes
 
         // get summoner data from API and save into db
         let summonerData = await summonerCall(summonerName);

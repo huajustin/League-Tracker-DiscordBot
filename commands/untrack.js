@@ -13,11 +13,11 @@ module.exports = {
 
         const summonerName = args.join(" ");
 
-        // TODO: Need to implement API monitor to watch for changes
         console.log(`Tracking ${summonerName} stopped`);
         message.reply(`Tracking ${summonerName} stopped. Use '!track ${summonerName}' to start tracking again`);
 
-        // TODO: Currently, code is only valid assuming a summoner can only be tracked by one server. Code should be updated to fix this
+        // TODO: The logic for this is backwards; we do not want to delete the summoner from the db and then remove the channel tracking it,
+        // instead we want to reomve the channel tracking, and if there are no channels tracking, then we can delete the summoner from the db
         SummonerObject.deleteOne({name: summonerName}, async (err, res) => {
             if (err) {
                 console.error(`Could not delete summoner!`);
@@ -26,13 +26,12 @@ module.exports = {
                 if (res.deletedCounted === 0) {
                     console.log(`Profile for ${summonerName} does not exist and cannot be deleted`);
                 } else {
-                    console.log(`Profile for ${summonerName} succesfully deleted`);
-
-                    // we can guarantee that since the profile had an entry and was removed, we can also remove from server's tracked summoners
                     await SummonerTrackingObject.findOneAndUpdate(
                         {name: summonerName}, 
                         {$pull: {channelsTracking: message.channel.id}}, 
                     );
+
+                    console.log(`Profile for ${summonerName} succesfully deleted`);
                 }
                 console.log(`Database deletion result: ${res}`);
             }
