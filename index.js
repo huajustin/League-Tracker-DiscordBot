@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const {prefix, token} = require('./config.json');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const messagerService = require('./endpoints/services/message_service');
 
 const dbURL = 'mongodb://localhost:27017/summoners';
 const client = new Discord.Client();
@@ -49,3 +50,6 @@ client.on('message', (msg) => {
 });
 
 client.login(token);
+
+messagerService.startMessageService(client);
+module.exports.mainClient = client;
