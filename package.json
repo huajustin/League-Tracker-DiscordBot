@@ -4,7 +4,7 @@
   "description": "Discord bot to live track summoner games and stats",
   "main": "index.js",
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
+    "@discordjs/opus": "^0.8.0",
     "discord.js": "^12.2.0",
     "lodash": "^4.17.20",
     "mongodb": "^3.5.7",
